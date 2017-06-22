@@ -1,0 +1,8 @@
+library(lubridate)
+library(dplyr)
+PowerData<-read.table("./household_power_consumption.txt",header=TRUE,sep=";",na.strings="?",stringsAsFactors=FALSE,colClasses=c("character","character","numeric","numeric","numeric","numeric","numeric","numeric","numeric"))
+PowerData<-mutate(PowerData,DateTime=dmy_hms(paste(PowerData[,"Date"],PowerData[,"Time"])))
+FebPowerData<-subset(PowerData,Date=="1/2/2007"|Date=="2/2/2007")
+with(FebPowerData,plot(DateTime,Global_active_power,xlab="",ylab="Global Active Power (kilowatts)",pch=20,type="l"))
+dev.copy(png,"plotB.png")
+dev.off()
